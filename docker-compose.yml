@@ -1,0 +1,48 @@
+
+services:
+  service:
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile
+    image : mms-service
+    ports:
+      - "8080:80"
+    environment:
+      DB_USER: "apiuser"
+      DB_PASSWORD: "q1w2e3r4"
+      DB_HOST: "db"
+      DB_DATABASE: "mms"
+    depends_on:
+      - db        
+
+  jobs:
+    build:
+      context: .
+      dockerfile: ./jobs/Dockerfile
+    image : mms-jobs
+    environment:
+      DB_USER: "apiuser"
+      DB_PASSWORD: "q1w2e3r4"
+      DB_HOST: "db"
+      DB_DATABASE: "mms"
+      API_URL: "https://api.mercadobitcoin.net/api/v4/candles?symbol=#pair#&from=#from#&to=#to#&resolution=1d"
+    depends_on:
+      - db         
+
+  db:
+    container_name: postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: apiuser
+      POSTGRES_PASSWORD: q1w2e3r4
+      PGDATA: /data/postgres
+      POSTGRES_DB: mms
+    volumes:
+      - db:/data/postgres
+    ports:
+      - "5432:5432"
+
+volumes:
+  db:
+
+
