@@ -146,6 +146,14 @@ Para rodar a job localmente execute o comando:
 make job
 ```
 
+### Testes
+
+Para rodar os tests execute o comando:
+
+```sh
+make test
+```
+
 ## Debitos Técnicos
 
 - Implementar um alarme que deveria ser disparado quando falte o registro de algum dia dentre
