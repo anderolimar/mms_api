@@ -35,7 +35,6 @@ class MMSRepository(IMMSRepository):
         with Session() as session:
             pairMms = session.query(PairMMSData).where(PairMMSData.pair == pair).where(PairMMSData.timestamp >= fromTms).where(PairMMSData.timestamp <= toTms)
             list = pairMms
-            print(f"################ pairMms : {pairMms}")
 
         return list            
 
